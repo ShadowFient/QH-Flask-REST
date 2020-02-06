@@ -1,6 +1,7 @@
 from flask_restful import Resource
 import mysql.connector as sql
 import credentials
+import pandas as pd
 
 
 class FetchData(Resource):
@@ -11,9 +12,8 @@ class FetchData(Resource):
                            user=credentials.USER,
                            passwd=credentials.PASSWD,
                            database="quantum")
-        cursor = conn.cursor()
         stmt = "select POD, EXP_RATIO from pods"
-        cursor.execute(stmt)
-        result = cursor.fetchall()
+        result = pd.read_sql(stmt, conn)
+        result.set_index("POD", inplace=True)
         conn.close()
-        return {'data': result}
+        return result.to_dict(orient="index")
