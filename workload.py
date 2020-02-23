@@ -1,4 +1,4 @@
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 import pandas as pd
 import mysql.connector as sql
 import credentials
@@ -8,6 +8,9 @@ class Workload(Resource):
 
     @staticmethod
     def get():
+        parser = reqparse.RequestParser()
+        parser.add_argument("name", default="Initial Config")
+        config_name = parser.parse_args()["name"].replace("\'", "\"")
         # connect to the database
         conn = sql.connect(host=credentials.HOST,
                            user=credentials.USER,
@@ -28,7 +31,8 @@ class Workload(Resource):
                         " from `pods_clients_map` map" \
                         " inner join `model_output_data` output" \
                         " on map.`GroupID` = output.`GroupID`" \
-                        " where map.`INITIAL_POD` = {};"
+                        " where map.`INITIAL_POD` = {}" \
+                        " and map.`Config_Name` = '{}';"
         # query all the POD id
         pods_df: pd.DataFrame = pd.read_sql(pods_query, conn)
 
@@ -37,7 +41,8 @@ class Workload(Resource):
         for row in pods_df.itertuples():
             # query the workload (in hours) for all the clients belonging to
             # a POD
-            clients_df = pd.read_sql(clients_query.format(row.POD), conn)
+            clients_df = pd.read_sql(clients_query
+                                     .format(row.POD, config_name), conn)
             clients_workload_s: pd.Series = clients_df.sum(axis=0)
             clients_workload_s["INITIAL_POD"] = row.POD
             clients_workload_s.drop("GroupID", inplace=True)
