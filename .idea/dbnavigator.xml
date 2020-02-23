@@ -25,7 +25,8 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="54fd4e89-ccac-47ed-a437-e400749b723d">
-        <schema name="quantum" object-types="function, constraint, view, procedure, column, index, table, dataset trigger" />
+        <schema name="performance_schema" object-types="table, dataset trigger, column, function, procedure, view, constraint, index" />
+        <schema name="quantum" object-types="table, dataset trigger, column, function, procedure, view, constraint, index" />
       </connection>
     </loaded-nodes>
   </component>
@@ -36,8 +37,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="54fd4e89-ccac-47ed-a437-e400749b723d" object-ref="schemas/quantum/tables/pods" />
       <object connection-id="54fd4e89-ccac-47ed-a437-e400749b723d" object-ref="schemas/quantum/tables/model_output_data" />
+      <object connection-id="54fd4e89-ccac-47ed-a437-e400749b723d" object-ref="schemas/quantum/tables/pods" />
       <object connection-id="54fd4e89-ccac-47ed-a437-e400749b723d" object-ref="schemas/quantum/tables/pods_clients_map" />
     </open-files>
   </component>
@@ -50,6 +51,7 @@
         <condition column="POD" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="54fd4e89-ccac-47ed-a437-e400749b723d" dataset="performance_schema.events_stages_history_long" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="54fd4e89-ccac-47ed-a437-e400749b723d" dataset="quantum.pods_clients_map" active-filter-id="7a72d45c-4e87-45e0-abc7-1d1c6a5dcbcf">
       <filter id="7a72d45c-4e87-45e0-abc7-1d1c6a5dcbcf" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="GroupID" operator="=" value="" active="true" />
