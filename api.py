@@ -5,6 +5,7 @@ from workload import Workload
 from activity import Activity
 from pod_to_clients import PodToClient
 from save_load import SaveConfig, LoadConfig, CurrentConfigs
+from psr import PSR
 import fetch_data
 
 app = Flask(__name__)
@@ -18,6 +19,7 @@ api.add_resource(PodToClient, '/pod_to_clients')
 api.add_resource(SaveConfig, '/save_config')
 api.add_resource(LoadConfig, '/load_config')
 api.add_resource(CurrentConfigs, '/current_configs')
+api.add_resource(PSR, '/psr')
 
 if __name__ == '__main__':
     app.run(debug=True)
