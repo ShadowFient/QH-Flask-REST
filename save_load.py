@@ -14,9 +14,14 @@ class SaveConfig(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument("name", required=True)
         parser.add_argument("config", required=True)
+        parser.add_argument("exp_ratios", required=True)
+
         json_str = (parser.parse_args()["config"]).replace("\'", "\"")
         config = json.loads(json_str)
         name = (parser.parse_args()["name"]).replace("\'", "\"")
+        json_str = (parser.parse_args()["exp_ratios"]).replace("\'", "\"")
+        exp_ratios = json.loads(json_str)
+
         conn = sql.connect(host=credentials.HOST,
                            user=credentials.USER,
                            passwd=credentials.PASSWD,
@@ -26,7 +31,7 @@ class SaveConfig(Resource):
                                   " (INITIAL_POD, Group_Name, " \
                                   "GroupID, Config_Name)" \
                                   " values (%s, %s, %s, %s)"
-        save_exp_ratio_stmt_format = ("insert in pods"
+        save_exp_ratio_stmt_format = ("insert into pods"
                                       " (Config_Name, POD, EXP_RATIO,"
                                       " PSR_EXP_RATIO)"
                                       " values (%s, %s, %s, %s)")
@@ -36,7 +41,14 @@ class SaveConfig(Resource):
             for client in config[pod]:
                 values.append((int(pod), client[1], client[0], name))
 
+        for pod in exp_ratios:
+            exp_values.append((name,
+                               int(pod),
+                               exp_ratios[pod]["EXP_RATIO"],
+                               exp_ratios[pod]["PSR_EXP_RATIO"]))
+
         cursor.executemany(save_config_stmt_format, values)
+        cursor.executemany(save_exp_ratio_stmt_format, exp_values)
         conn.commit()
         conn.close()
 
