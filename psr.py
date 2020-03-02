@@ -20,6 +20,8 @@ class PSR(Resource):
         pods_stmt = "select POD from pods"
         psr_stmt= "select INITIAL_POD, output.GroupID," \
                   "PERC_TOTAL_PSR_PHONE," \
+                  "PRED_PHONE_VOLUME," \
+                  "SUCC_TIME_PSR_PHONE," \
                   "PSR_PHONE_ACTS_LIKE_MEM " \
                   "from pods_clients_map map " \
                   "inner join model_output_data output " \
