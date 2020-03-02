@@ -17,7 +17,7 @@ class PSR(Resource):
                            database='quantum',
                            port=3306)
 
-        pods_stmt = "select POD from pods"
+        pods_stmt = "select POD from pods where Config_Name = '{}'"
         psr_stmt= "select INITIAL_POD, output.GroupID," \
                   "PERC_TOTAL_PSR_PHONE," \
                   "PRED_PHONE_VOLUME," \
@@ -29,7 +29,7 @@ class PSR(Resource):
                   "where map.INITIAL_POD = {} " \
                   "and map.Config_Name = '{}';"
 
-        pods_df: pd.DataFrame=pd.read_sql(pods_stmt, conn)
+        pods_df: pd.DataFrame = pd.read_sql(pods_stmt.format(config_name), conn)
         # psr_df: pd.DataFrame = pd.read_sql(psr_stmt, conn)
         psr_df: pd.DataFrame = pd.DataFrame()
 

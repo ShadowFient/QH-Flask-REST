@@ -26,7 +26,12 @@ class SaveConfig(Resource):
                                   " (INITIAL_POD, Group_Name, " \
                                   "GroupID, Config_Name)" \
                                   " values (%s, %s, %s, %s)"
+        save_exp_ratio_stmt_format = ("insert in pods"
+                                      " (Config_Name, POD, EXP_RATIO,"
+                                      " PSR_EXP_RATIO)"
+                                      " values (%s, %s, %s, %s)")
         values = []
+        exp_values = []
         for pod in config:
             for client in config[pod]:
                 values.append((int(pod), client[1], client[0], name))

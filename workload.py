@@ -18,7 +18,7 @@ class Workload(Resource):
                            database='quantum',
                            port=3306)
         # sql statements needed
-        pods_query = "select POD from pods"
+        pods_query = "select POD from pods where Config_Name='{}'"
         clients_query = "select `INITIAL_POD`, output.`GroupID`," \
                         " `PCG_ALL_TIME_HOURS`," \
                         " `PCGPDC_TIME_HOURS`," \
@@ -34,7 +34,8 @@ class Workload(Resource):
                         " where map.`INITIAL_POD` = {}" \
                         " and map.`Config_Name` = '{}';"
         # query all the POD id
-        pods_df: pd.DataFrame = pd.read_sql(pods_query, conn)
+        pods_df: pd.DataFrame = pd.read_sql(
+            pods_query.format(config_name), conn)
 
         # calculate the current overall workload for each POD
         workload_df: pd.DataFrame = pd.DataFrame()
