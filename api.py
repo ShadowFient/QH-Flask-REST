@@ -7,6 +7,7 @@ from pod_to_clients import PodToClient
 from save_load import SaveConfig, LoadConfig, CurrentConfigs
 from psr import PSR
 import fetch_data
+from client_psr import client_psr
 
 app = Flask(__name__)
 api = Api(app)
@@ -20,6 +21,7 @@ api.add_resource(SaveConfig, '/save_config')
 api.add_resource(LoadConfig, '/load_config')
 api.add_resource(CurrentConfigs, '/current_configs')
 api.add_resource(PSR, '/psr')
+api.add_resource(client_psr, '/client_psr')
 
 if __name__ == '__main__':
     app.run(debug=True)
