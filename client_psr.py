@@ -6,9 +6,9 @@ from flask_restful import reqparse
 
 class client_psr(Resource):
     def format(self,data):
-        formatted_data = []
+        formatted_data = {}
         for idx, val in enumerate(data):
-            formatted_data.append({val[0]:val[1]})
+            formatted_data[val[0]] = val[1]
         return formatted_data
 
     def get(self):
