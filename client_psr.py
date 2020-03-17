@@ -8,7 +8,7 @@ class client_psr(Resource):
     def format(self,data):
         formatted_data = {}
         for idx, val in enumerate(data):
-            formatted_data[val[0]] = [val[1],val[2]]
+            formatted_data[val[0]] = val[1]
         return formatted_data
 
     def get(self):
@@ -19,7 +19,7 @@ class client_psr(Resource):
                            passwd=credentials.PASSWD,
                            database="quantum")
         cursor = conn.cursor()
-        stmt = "SELECT m.Group_Name, m.PRED_PHONE_VOLUME, p.INITIAL_POD FROM (SELECT Group_Name, sum(PRED_PHONE_VOLUME) PRED_PHONE_VOLUME FROM quantum.model_output_data GROUP BY Group_Name) m INNER JOIN quantum.pods_clients_map p WHERE m.Group_Name = p.Group_Name;"
+        stmt = "SELECT m.Group_Name, m.PRED_PHONE_VOLUME FROM (SELECT Group_Name, sum(PRED_PHONE_VOLUME) PRED_PHONE_VOLUME FROM quantum.model_output_data GROUP BY Group_Name) m INNER JOIN quantum.pods_clients_map p WHERE m.Group_Name = p.Group_Name;"
         cursor.execute(stmt)
         result = cursor.fetchall()
         conn.close()
