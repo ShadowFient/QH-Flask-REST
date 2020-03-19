@@ -32,4 +32,3 @@ class ClientPSR(Resource):
         conn.close()
 
         return ClientPSR.format(result)
-
