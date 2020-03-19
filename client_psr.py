@@ -10,7 +10,7 @@ class ClientPSR(Resource):
     def format(data):
         formatted_data = {}
         for idx, val in enumerate(data):
-            formatted_data[val[0]] = [val[1], val[2]]
+            formatted_data[val[0]] = val[1]
         return formatted_data
 
     @staticmethod
@@ -22,12 +22,12 @@ class ClientPSR(Resource):
                            passwd=credentials.PASSWD,
                            database="quantum")
         cursor = conn.cursor()
-        stmt = "SELECT m.Group_Name, m.PERC_TOTAL_PSR_PHONE, p.INITIAL_POD" \
-               " FROM (SELECT Group_Name, sum(PERC_TOTAL_PSR_PHONE)" \
-               " PERC_TOTAL_PSR_PHONE" \
-               " FROM quantum.model_output_data GROUP BY Group_Name) m" \
-               " INNER JOIN quantum.pods_clients_map p" \
-               " WHERE m.Group_Name = p.Group_Name;"
+        stmt = ("SELECT m.Group_Name, m.PRED_PHONE_VOLUME"
+                " FROM"
+                " (SELECT Group_Name, sum(PRED_PHONE_VOLUME) PRED_PHONE_VOLUME"
+                " FROM quantum.model_output_data GROUP BY Group_Name) m"
+                " INNER JOIN quantum.pods_clients_map p"
+                " WHERE m.Group_Name = p.Group_Name;")
         cursor.execute(stmt)
         result = cursor.fetchall()
         conn.close()
