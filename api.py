@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Api
+from flask_restful import Api, Resource
 from flask_cors import CORS
 from workload import Workload
 from activity import Activity

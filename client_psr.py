@@ -26,8 +26,7 @@ class ClientPSR(Resource):
                 " FROM"
                 " (SELECT Group_Name, sum(PRED_PHONE_VOLUME) PRED_PHONE_VOLUME"
                 " FROM quantum.model_output_data GROUP BY Group_Name) m"
-                " INNER JOIN quantum.pods_clients_map p"
-                " WHERE m.Group_Name = p.Group_Name;")
+                " INNER JOIN quantum.pods_clients_map p WHERE m.Group_Name = p.Group_Name;")
         cursor.execute(stmt)
         result = cursor.fetchall()
         conn.close()
