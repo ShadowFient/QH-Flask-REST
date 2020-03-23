@@ -33,7 +33,16 @@ class Activity(Resource):
                          " PCGTERM_TIME_HOURS_SUCC," \
                          " PCGTERM_TIME_HOURS_UNSUCC, " \
                          " PCGEMPGRP_TIME_HOURS_SUCC," \
-                         " PCGEMPGRP_TIME_HOURS_UNSUCC" \
+                         " PCGEMPGRP_TIME_HOURS_UNSUCC," \
+                         " PSR_PHONE_ACTS_LIKE_MEM, " \
+                         " PCG_FOLLOWUP_ACTS_LIKE, " \
+                         " PCG_NEWALERT_ACTS_LIKE, " \
+                         " PCG_PAC_ACTS_LIKE, " \
+                         " PCG_PDC_ACTS_LIKE, " \
+                         " PCG_REF_ACTS_LIKE, " \
+                         " PCG_TERM_ACTS_LIKE, " \
+                         " PCG_EMPGRP_ACTS_LIKE, " \
+                         " Members" \
                          " from `pods_clients_map` map" \
                          " inner join `model_output_data` output" \
                          " on map.`GroupID` = output.`GroupID`" \
