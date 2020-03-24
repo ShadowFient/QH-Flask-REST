@@ -18,10 +18,10 @@ class Members(Resource):
                            database="quantum")
 
         pods_query = "select POD from pods"
-        member_query = "select INITIAL_POD, output.GroupID, Members " \
+        member_query = "select INITIAL_POD, output.Group_Name, Members " \
                        "from pods_clients_map map " \
                        "inner join model_output_data output " \
-                       "on map.GroupID = output.GroupID " \
+                       "on map.Group_Name = output.Group_Name " \
                        "where map.INITIAL_POD = {} " \
                        "and map.Config_Name='{}';"
         pods_df: pd.DataFrame = pd.read_sql(pods_query, conn)
@@ -38,7 +38,7 @@ class Members(Resource):
         conn.close()
 
         # return member_df.to_dict('record')
-        table=member_df.pivot_table(index="INITIAL_POD",columns="GroupID",values="Members",aggfunc='first')
+        table=member_df.pivot_table(index="INITIAL_POD",columns="Group_Name",values="Members",aggfunc='first')
 
         res=table.to_dict(orient="index")
 
