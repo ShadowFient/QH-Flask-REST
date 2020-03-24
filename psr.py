@@ -30,7 +30,6 @@ class PSR(Resource):
                    "and map.Config_Name = '{}';"
 
         pods_df: pd.DataFrame = pd.read_sql(pods_stmt.format(config_name), conn)
-        # psr_df: pd.DataFrame = pd.read_sql(psr_stmt, conn)
         psr_df: pd.DataFrame = pd.DataFrame()
 
         for row in pods_df.itertuples():
