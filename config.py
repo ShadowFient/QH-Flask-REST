@@ -65,10 +65,14 @@ class Config(Resource):
                            database="quantum")
         cursor = conn.cursor()
         stmt = "SELECT * FROM quantum.pods_clients_map where Config_Name='{}';"
+        stmt1 = "select POD from pods where Config_Name='{}';" \
+            .format(name)
+        cursor.execute(stmt1)
+        sz = len(cursor.fetchall())
         cursor.execute(stmt.format(name))
         result = cursor.fetchall()
         conn.close()
-        return PodToClient.format_result(result)
+        return PodToClient.format_result(result, sz)
 
     @staticmethod
     def delete():
